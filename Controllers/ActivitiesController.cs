@@ -49,7 +49,7 @@ namespace ProHodie.API.Controllers
         public async Task<IActionResult> EditActivity([FromBody] Activity activity, int id)
         {
             var activityToEdit = await _context.Activities.SingleOrDefaultAsync(a => a.Id == id);
-            if (id == null)
+            if (activityToEdit == null)
                 return BadRequest();
 
             activityToEdit.Name = activity.Name;
