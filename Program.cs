@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProHodie.API.Data;
+using ProHodie.API.Data.Repositories;
+using ProHodie.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<ProHodieDbContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("ProHodieDbConnectionString"))
 );
+
+builder.Services.AddScoped<IActivityRepository, ActivityRepository>();
+builder.Services.AddScoped<IActivityService, ActivityService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ProHodie.API.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProHodie.API.Models;
-using System.Reflection.Metadata.Ecma335;
+using ProHodie.API.Services;
 
 namespace ProHodie.API.Controllers
 {
@@ -11,23 +8,23 @@ namespace ProHodie.API.Controllers
     [ApiController]
     public class ActivitiesController : ControllerBase
     {
-        private readonly ProHodieDbContext _context;
+        private readonly IActivityService _service;
 
-        public ActivitiesController(ProHodieDbContext context)
+        public ActivitiesController(IActivityService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Activity>>> GetActivities()
         {
-            return Ok(await _context.Activities.ToListAsync());
+            return Ok(await _service.GetActivities());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetActivityById(int id)
         {
-            var activity = await _context.Activities.SingleOrDefaultAsync(a => a.Id == id);
+            var activity = await _service.GetActivityById(id);
             if (activity == null)
                 return new NotFoundResult();
 
@@ -37,45 +34,27 @@ namespace ProHodie.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddActivity([FromBody] Activity activity)
         {
-            await _context.AddAsync(activity);
-
-            if (await _context.SaveChangesAsync() < 0)
-                return BadRequest();
+            await _service.AddActivity(activity);
 
             return Ok(activity);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditActivity([FromBody] Activity activity, int id)
+        public async Task<IActionResult> UpdateActivity([FromBody] Activity activity, int id)
         {
-            var activityToEdit = await _context.Activities.SingleOrDefaultAsync(a => a.Id == id);
-            if (activityToEdit == null)
+            if (activity.Id != id)
                 return BadRequest();
 
-            activityToEdit.Name = activity.Name;
-            activityToEdit.ActivityCategoryId = activity.ActivityCategoryId;
-            activityToEdit.StartDate = activity.StartDate;
-            activityToEdit.EndDate = activity.EndDate;
-
-            if (await _context.SaveChangesAsync() < 0)
-                return BadRequest();
-
+            await _service.UpdateActivity(activity);
             return Ok(id);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteActivity([FromBody] Activity activity, int id)
+        public async Task<IActionResult> DeleteActivity(int id)
         {
-            var activityToDelete = await _context.Activities.SingleOrDefaultAsync(a => a.Id == id);
-            if (activityToDelete == null)
-                return BadRequest();
+            await _service.DeleteActivity(id);
 
-            _context.Remove(activityToDelete);
-
-            if (await _context.SaveChangesAsync() < 0)
-                return BadRequest();
-
-            return Ok(id);
+            return new NoContentResult();
         }
     }
 }
