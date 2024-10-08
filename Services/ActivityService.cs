@@ -1,5 +1,4 @@
-﻿using NuGet.Protocol.Core.Types;
-using ProHodie.API.Data.Repositories;
+﻿using ProHodie.API.Data.Repositories;
 using ProHodie.API.Models;
 
 namespace ProHodie.API.Services

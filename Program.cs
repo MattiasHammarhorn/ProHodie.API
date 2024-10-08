@@ -12,7 +12,9 @@ builder.Services.AddDbContext<ProHodieDbContext>(opt =>
 );
 
 builder.Services.AddScoped<IActivityRepository, ActivityRepository>();
+builder.Services.AddScoped<IActivityCategoryRepository, ActivityCategoryRepository>();
 builder.Services.AddScoped<IActivityService, ActivityService>();
+builder.Services.AddScoped<IActivityCategoryService, ActivityCategoryService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
