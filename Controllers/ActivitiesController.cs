@@ -36,7 +36,7 @@ namespace ProHodie.API.Controllers
         {
             await _service.AddActivity(activity);
 
-            return Ok(activity);
+            return new OkObjectResult(activity);
         }
 
         [HttpPut("{id}")]

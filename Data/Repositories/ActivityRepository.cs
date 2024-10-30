@@ -13,7 +13,7 @@ namespace ProHodie.API.Data.Repositories
         }
         public async Task<Activity> AddActivity(Activity activity)
         {
-            await _context.AddAsync(activity);
+            _context.Add(activity);
 
             await _context.SaveChangesAsync();
             return activity;
@@ -31,7 +31,7 @@ namespace ProHodie.API.Data.Repositories
 
         public async Task<IEnumerable<Activity>> GetActivities()
         {
-            return await _context.Activities.ToListAsync();
+            return await _context.Activities.OrderByDescending(a => a.StartTime).ToListAsync();
         }
 
         public async Task<Activity?> GetActivityById(int id)
@@ -45,8 +45,8 @@ namespace ProHodie.API.Data.Repositories
             
             activityToEdit.Name = activity.Name;
             activityToEdit.ActivityCategoryId = activity.ActivityCategoryId;
-            activityToEdit.StartDate = activity.StartDate;
-            activityToEdit.EndDate = activity.EndDate;
+            activityToEdit.StartTime = activity.StartTime;
+            activityToEdit.EndTime = activity.EndTime;
 
             await _context.SaveChangesAsync();
 
