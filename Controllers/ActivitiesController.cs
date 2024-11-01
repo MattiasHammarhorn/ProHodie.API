@@ -21,6 +21,13 @@ namespace ProHodie.API.Controllers
             return Ok(await _service.GetActivities());
         }
 
+        [HttpGet("filter=ongoing")]
+        public async Task<IActionResult> GetOngoingActivity()
+        {
+            var x = await _service.GetOngoingActivity();
+            return Ok(x);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetActivityById(int id)
         {

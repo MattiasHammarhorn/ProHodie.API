@@ -34,6 +34,11 @@ namespace ProHodie.API.Data.Repositories
             return await _context.Activities.OrderByDescending(a => a.StartTime).ToListAsync();
         }
 
+        public async Task<Activity?> GetOngoingActivity()
+        {
+            return await _context.Activities.FirstOrDefaultAsync(a => a.EndTime == null);
+        }
+
         public async Task<Activity?> GetActivityById(int id)
         {
             return await _context.Activities.SingleOrDefaultAsync(a => a.Id == id);

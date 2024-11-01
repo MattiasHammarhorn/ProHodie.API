@@ -32,6 +32,11 @@ namespace ProHodie.API.Services
             return await _repository.GetActivityById(id);
         }
 
+        public async Task<Activity?> GetOngoingActivity()
+        {
+            return await _repository.GetOngoingActivity();
+        }
+
         public async Task<Activity> UpdateActivity(Activity activity)
         {
             return await _repository.UpdateActivity(activity);
