@@ -29,9 +29,16 @@ namespace ProHodie.API.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<Activity>> GetActivities()
+        public async Task<IEnumerable<Activity>> GetActivities(string? filter)
         {
-            return await _context.Activities.OrderByDescending(a => a.StartTime).ToListAsync();
+            if (filter == "endDate=null")
+                return await _context.Activities
+                    .Include(a => a.EndTime == null)
+                    .OrderByDescending(a => a.StartTime).ToListAsync();
+            else
+                return await _context.Activities
+                    .Where(a => a.EndTime != null)
+                    .OrderByDescending(a => a.StartTime).ToListAsync();
         }
 
         public async Task<Activity?> GetOngoingActivity()

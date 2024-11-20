@@ -15,10 +15,10 @@ namespace ProHodie.API.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Activity>>> GetActivities()
+        [HttpGet()]
+        public async Task<ActionResult<IEnumerable<Activity>>> GetActivities(string? filter)
         {
-            return Ok(await _service.GetActivities());
+            return Ok(await _service.GetActivities(filter));
         }
 
         [HttpGet("filter=ongoing")]

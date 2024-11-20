@@ -22,9 +22,9 @@ namespace ProHodie.API.Services
             await _repository.DeleteActivity(id);
         }
 
-        public async Task<IEnumerable<Activity>> GetActivities()
+        public async Task<IEnumerable<Activity>> GetActivities(string? filter)
         {
-            return await _repository.GetActivities();
+            return await _repository.GetActivities(filter);
         }
 
         public async Task<Activity?> GetActivityById(int id)
