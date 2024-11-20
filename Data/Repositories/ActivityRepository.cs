@@ -31,7 +31,7 @@ namespace ProHodie.API.Data.Repositories
 
         public async Task<IEnumerable<Activity>> GetActivities(string? filter)
         {
-            if (filter == "endDate=null")
+            if (filter == "endTime=null")
                 return await _context.Activities
                     .Include(a => a.EndTime == null)
                     .OrderByDescending(a => a.StartTime).ToListAsync();
