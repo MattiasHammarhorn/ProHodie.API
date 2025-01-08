@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using ProHodie.API.Models;
 using ProHodie.API.Services;
 
@@ -54,6 +55,22 @@ namespace ProHodie.API.Controllers
 
             await _service.UpdateActivity(activity);
             return Ok(id);
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchActivity([FromBody] JsonPatchDocument<Activity> patchDoc, int id)
+        {
+            var activity = await _service.GetActivityById(id);
+            if (activity == null)
+                return BadRequest();
+
+            patchDoc.ApplyTo(activity, ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            await _service.UpdateActivity(activity);
+
+            return new NoContentResult();
         }
 
         [HttpDelete("{id}")]

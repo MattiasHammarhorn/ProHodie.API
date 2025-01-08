@@ -6,7 +6,12 @@ using ProHodie.API.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(opt =>
+    {
+        opt.SerializerSettings.DateParseHandling = Newtonsoft.Json.DateParseHandling.DateTimeOffset;
+    }
+);
 builder.Services.AddDbContext<ProHodieDbContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("ProHodieDbConnectionString"))
 );
