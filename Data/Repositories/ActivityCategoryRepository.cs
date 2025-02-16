@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using ProHodie.API.Models;
+using ProHodie.API.Models.Entities;
 
 namespace ProHodie.API.Data.Repositories
 {

@@ -1,4 +1,4 @@
-﻿using ProHodie.API.Models;
+﻿using ProHodie.API.Models.Entities;
 
 namespace ProHodie.API.Services
 {

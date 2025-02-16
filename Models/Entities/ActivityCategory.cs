@@ -1,4 +1,4 @@
-﻿namespace ProHodie.API.Models
+﻿namespace ProHodie.API.Models.Entities
 {
     public class ActivityCategory
     {

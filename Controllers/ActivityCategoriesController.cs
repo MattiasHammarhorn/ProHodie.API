@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProHodie.API.Data;
-using ProHodie.API.Models;
+using ProHodie.API.Models.Entities;
 
 namespace ProHodie.API.Controllers
 {
