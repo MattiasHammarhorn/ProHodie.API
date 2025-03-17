@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProHodie.API.Data;
 using ProHodie.API.Data.Repositories;
+using ProHodie.API.Models.Entities;
 using ProHodie.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,9 +14,13 @@ builder.Services.AddControllers()
         opt.SerializerSettings.DateParseHandling = Newtonsoft.Json.DateParseHandling.DateTimeOffset;
     }
 );
+
 builder.Services.AddDbContext<ProHodieDbContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("ProHodieDbConnectionString"))
 );
+
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+    .AddEntityFrameworkStores<ProHodieDbContext>();
 
 builder.Services.AddScoped<IActivityRepository, ActivityRepository>();
 builder.Services.AddScoped<IActivityCategoryRepository, ActivityCategoryRepository>();
